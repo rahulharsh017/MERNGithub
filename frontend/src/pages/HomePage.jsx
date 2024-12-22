@@ -5,19 +5,21 @@ import Repos from '../components/Repos'
 import Search from '../components/Search'
 import SortRepos from '../components/SortRepos'
 import Spinner from '../components/Spinner'
+import { useAuthContext } from '../context/AuthContext'
 
 
 const HomePage = () => {
+	const {authUser} = useAuthContext();
 	const [userProfile,setUserProfile] = useState(null);
 	const [repos,setRepos] = useState([]);
 	const [loading,setLoading] = useState(false);
 
 	const[sortType,setSortType] = useState('recent');
     
-	const getUserProfileandRepos = useCallback (async (username="rahulharsh017") => {
+	const getUserProfileandRepos = useCallback (async (username=authUser?.username) => {
 		setLoading(true);
 		try {
-			const res = await fetch(`http://localhost:5000/api/users/profile/${username}`);
+			const res = await fetch(`/api/users/profile/${username}`);
             const{userProfile,repos} = await res.json();
 
 			repos.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
