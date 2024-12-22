@@ -6,6 +6,7 @@ import Repos from "../components/Repos";
 import Search from "../components/Search";
 import SortRepos from "../components/SortRepos";
 import Spinner from "../components/Spinner";
+import { useAuthContext } from "../context/AuthContext";
 
 const HomePage = () => {
     const {authUser} = useAuthContext();
